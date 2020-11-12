@@ -1,45 +1,39 @@
 import React from 'react';
-import CodeEditor from './editor/code-editor'
-import SceneEditor from './editor/scene-editor'
-import '@annotationhub/react-golden-layout/dist/css/goldenlayout-base.css';
-import '@annotationhub/react-golden-layout/dist/css/themes/goldenlayout-dark-theme.css';
-import { GoldenLayoutComponent } from '@annotationhub/react-golden-layout';
+import LayoutRoot from './layout-root';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+// import NavDropdown from 'react-bootstrap/NavDropdown';
+import { BsFillPlayFill } from "react-icons/bs";
+import Button from 'react-bootstrap/Button';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
 
 const appStyle = {
-  height: '100%',
-}
+  height: '100vh',
+  overflow: 'hidden',
+};
 
-const shaders = {vertexShader: '', fragmentShader: ''}
-const uniforms = {}
-const attributes = {}
-
-function App() {
-  return (<div className="app" style={appStyle}>
-    <GoldenLayoutComponent
-        config={{
-          content: [{
-            type: 'row',
-            content:[{
-              component: () => <SceneEditor shaders={shaders} variables={{uniforms, attributes}}/>,
-                title: 'Preview'
-            }, {
-              type: 'column',
-              content:[{
-                component: () => <CodeEditor text={shaders.vertexShader} />,
-                title: 'Vertex Shader'
-              },{
-                component: () => <CodeEditor text={shaders.fragmentShader} />,
-                title: 'Fragment Shader'
-              }]
-            }]
-          }]
-        }}
-        // (Optional) Set up auto-resizing. Layout will resize when the window resizes.
-        autoresize={true}
-        // (Optional) (Milliseconds) Debounce resize to prevent excessive re-renders.
-        debounceResize={100}
-      />
-  </div>);
+const App = () => {
+  return (
+    <div style={appStyle}>
+      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+      <Navbar.Brand href="#home">WebGL Shader Playground</Navbar.Brand>
+      <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+      <Navbar.Collapse id="responsive-navbar-nav">
+        <Nav className="mr-auto">
+          <ButtonGroup aria-label="Operations">
+            <Button variant="success"><BsFillPlayFill/></Button>
+            {/* <Button variant="secondary">Middle</Button>
+            <Button variant="secondary">Right</Button> */}
+          </ButtonGroup>
+        </Nav>
+        <Nav>
+          <Nav.Link href="https://github.com/Haicatw/shader-playground.git">Github</Nav.Link>
+        </Nav>
+      </Navbar.Collapse>
+      </Navbar>
+      <LayoutRoot />
+    </div>
+  );
 }
 
 export default App;

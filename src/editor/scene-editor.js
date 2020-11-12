@@ -7,6 +7,7 @@ class SceneEditor extends Component {
     const width = this.anchor.clientWidth;
     const height = this.anchor.clientHeight;
     this.scene = new THREE.Scene();
+    this.testObject = new THREE.Object3D();
 
     //Add Renderer
     this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -26,13 +27,40 @@ class SceneEditor extends Component {
     this.start();
   }
 
-  createMaterial() {
+  createMaterial(uniforms) {
+    const material = new THREE.ShaderMaterial( {
+      uniforms: {},
+      vertexShader: document.getElementById( 'vertexShader' ).textContent,
+      fragmentShader: document.getElementById( 'fragmentShader' ).textContent
+    });
+    return material;
+  }
 
+  swapObjectInScene(objectType, uniforms, attributes) {
+    this.testObject.clear();
+    if (objectType === 'point') {
+
+    } else if (objectType === 'sphere') {
+
+    } else if (objectType === 'quad') {
+
+    } else if (objectType === 'cube') {
+
+    }
   }
 
   componentWillUnmount() {
     this.stop();
     this.anchor.removeChild(this.renderer.domElement);
+  }
+
+  resize() {
+    const width = this.anchor.clientWidth;
+    const height = this.anchor.clientHeight;
+    this.camera.aspect = width / height;
+    this.camera.updateProjectionMatrix();
+
+    this.renderer.setSize( width, height );
   }
 
   // https://codesandbox.io/s/brave-violet-l9r01k94pm?from-embed=&file=/src/ThreeScene.js:0-4028
@@ -48,6 +76,7 @@ class SceneEditor extends Component {
 
   animate = () => {
     this.controls.update();
+    this.resize();
     this.renderScene();
     this.frameId = window.requestAnimationFrame(this.animate);
   };
